@@ -25,10 +25,14 @@ export default class Editor extends Component {
     const attachments = [];
     ImagePicker.openPicker({
       mediaType: "video",
-      multiple: true,
-      includeBase64: true
+      // multiple: true,
+      // includeBase64: true
     }).then((video) => {
       console.log(video)
+      this.setState({
+        source: video.sourceURL,
+        showModal: false
+      })
     })
     .then(() => {
       this.setState({
@@ -122,7 +126,7 @@ export default class Editor extends Component {
                   resizeMode={VideoPlayer.Constants.resizeMode.CONTAIN}
                   onChange={({ nativeEvent }) => console.log({ nativeEvent })} // get Current time on every second
                 />
-                <Trimmer
+                {/* <Trimmer
                   source={this.state.source}
                   height={100}
                   width={300}
@@ -132,7 +136,7 @@ export default class Editor extends Component {
                   thumbWidth={30} // iOS only
                   trackerColor={'green'} // iOS only
                   onChange={(e) => console.log(e.startTime, e.endTime)}
-                />
+                /> */}
               </View>
             );
           }
