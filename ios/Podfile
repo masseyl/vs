@@ -1,0 +1,21 @@
+# Uncomment the next line to define a global platform for your project
+# platform :ios, '9.0'
+
+target 'VS' do
+  # Comment the next line if you're not using Swift and don't want to use dynamic frameworks
+  use_frameworks!
+
+  # Pods for VS
+  pod 'RSKImageCropper'
+  pod 'QBImagePickerController'
+
+end
+  target 'VS-tvOSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
+
+  target 'VSTests' do
+    inherit! :search_paths
+    # Pods for testing
+  end
