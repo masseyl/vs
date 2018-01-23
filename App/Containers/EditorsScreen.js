@@ -4,11 +4,18 @@ import { connect } from "react-redux";
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 import EditorsActions from "../Redux/EditorsRedux";
 import Editor from "../Components/Editor";
+import Thumbnail from "../Components/Thumbnail";
 import ImagePicker from "react-native-image-crop-picker";
 // Styles
 import styles from "./Styles/EditorsScreenStyle";
 
 class EditorsScreen extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      videoPath: "",
+    };
+  }
   openPicker = () => {
     const attachments = [];
     ImagePicker.openPicker({
@@ -26,27 +33,58 @@ class EditorsScreen extends Component {
       });
   };
 
+  clickThumbnail = videoPath => {
+    this.setState({
+      videoPath: videoPath,
+    });
+  };
+
+  showEditor = () => {
+    if (this.state.videoPath) {
+      return (
+        <View>
+          <Editor source={this.state.videoPath} />
+        </View>
+      );
+    }
+    return null;
+  };
+
   render() {
     const videos = this.props.videos.videos;
     return (
-      <ScrollView
-        contentContainerStyle={{
+      <View
+        style={{
           flex: 1,
           position: "absolute",
           top: 30,
-          height: 333333,
         }}>
         <TouchableOpacity
           style={{ backgroundColor: "blue", margin: 10 }}
           onPress={this.openPicker}>
           <Text>Kick me</Text>
         </TouchableOpacity>
-        <View style={{ height: 333333, paddingBottom: 22800 }}>
+        <View
+          style={{
+            flex: 1,
+            flexWrap: "wrap",
+            flexDirection: "row",
+            justifyContent: "space-between",
+          }}>
           {videos.map((video, index) => {
-            return <Editor key={index} source={video.path} />;
+            return (
+              <View style={{ padding: 5 }}>
+                <Thumbnail
+                  key={index}
+                  source={video.path}
+                  showVideo={this.clickThumbnail}
+                />
+              </View>
+            );
           })}
         </View>
-      </ScrollView>
+        {this.showEditor()}
+      </View>
     );
   }
 }

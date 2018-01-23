@@ -32,11 +32,13 @@ export default class Editor extends Component {
       source: this.props.source,
     });
   }
+
   play = () => {
     this.setState({
       play: !this.state.play,
     });
   };
+
   trimVideo = () => {
     const options = {
       startTime: this.state.startTime,
@@ -71,16 +73,6 @@ export default class Editor extends Component {
       .catch(console.warn);
   };
 
-  getPreviewImageForSecond = second => {
-    const maximumSize = { width: 640, height: 1024 }; // default is { width: 1080, height: 1080 } iOS only
-    this.videoPlayerRef
-      .getPreviewForSecond(second, maximumSize) // maximumSize is iOS only
-      .then(base64String =>
-        console.log("This is BASE64 of image", base64String),
-      )
-      .catch(console.warn);
-  };
-
   getVideoInfo = () => {
     this.videoPlayerRef
       .getVideoInfo()
@@ -96,7 +88,7 @@ export default class Editor extends Component {
   };
 
   render() {
-    let source = this.state.source || this.props.source;
+    let source = this.props.source;
     return (
       <View>
         <View>
