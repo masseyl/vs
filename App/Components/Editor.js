@@ -1,65 +1,59 @@
-import React, { Component } from 'react'
+import React, { Component } from "react";
 // import PropTypes from 'prop-types';
-import { View,  Modal, Text, TouchableOpacity, Image } from 'react-native';
-import { VideoPlayer, Trimmer } from 'react-native-video-processing';
-import ImagePicker from 'react-native-image-crop-picker';
+import {
+  View,
+  Modal,
+  Text,
+  TouchableOpacity,
+  Image,
+  Dimensions,
+} from "react-native";
+import { VideoPlayer, Trimmer } from "react-native-video-processing";
 
-import styles from './Styles/EditorStyle'
+import styles from "./Styles/EditorStyle";
 
 export default class Editor extends Component {
-  constructor(props){
-    super(props)
+  constructor(props) {
+    super(props);
     this.video = {
-      currentTime: 0
-    }
+      currentTime: 0,
+    };
     this.state = {
-      showModal: false,
-      source: ''
-    }
+      play: true,
+      source: "",
+      currentTime: 0,
+      startTime: 0,
+      endTime: 86400,
+    };
   }
 
-  componentWillMount(){
-    this.openPicker()
+  componentDidMount() {
+    this.setState({
+      source: this.props.source,
+    });
   }
-  openPicker = () => {
-    const attachments = [];
-    ImagePicker.openPicker({
-      mediaType: "video",
-      // multiple: true,
-      // includeBase64: true
-    }).then((video) => {
-      console.log(video)
-      this.setState({
-        source: video.sourceURL,
-        showModal: false
-      })
-    })
-    .then(() => {
-      this.setState({
-        showModal: false
-      });
-      // TODO: "images" will need to be handled so we have something to upload
-      // this.props.addAttachments(attachments);
-    })
-    .catch((err) => {
-      this.setState({
-        cancelled: true
-      });
+  play = () => {
+    this.setState({
+      play: !this.state.play,
     });
   };
-
   trimVideo = () => {
     const options = {
-      startTime: 0,
-      endTime: 15,
+      startTime: this.state.startTime,
+      endTime: this.state.endTime,
       quality: VideoPlayer.Constants.quality.QUALITY_1280x720, // iOS only
       saveToCameraRoll: true, // default is false // iOS only
       saveWithCurrentDate: true, // default is false // iOS only
     };
-    this.videoPlayerRef.trim(options)
-    .then((newSource) => console.log(newSource))
-    .catch(console.warn);
-  }
+    this.videoPlayerRef
+      .trim(options)
+      .then(newSource =>
+        this.setState({
+          source: newSource,
+        }),
+      )
+      .catch(console.warn);
+  };
 
   compressVideo = () => {
     const options = {
@@ -71,73 +65,77 @@ export default class Editor extends Component {
       minimumBitrate: 300000,
       removeAudio: true, // default is false
     };
-    this.videoPlayerRef.compress(options)
-    .then((newSource) => console.log(newSource))
-    .catch(console.warn);
-  }
+    this.videoPlayerRef
+      .compress(options)
+      .then(newSource => console.log(newSource))
+      .catch(console.warn);
+  };
 
-  getPreviewImageForSecond = (second) => {
+  getPreviewImageForSecond = second => {
     const maximumSize = { width: 640, height: 1024 }; // default is { width: 1080, height: 1080 } iOS only
-    this.videoPlayerRef.getPreviewForSecond(second, maximumSize) // maximumSize is iOS only
-    .then((base64String) => console.log('This is BASE64 of image', base64String))
-    .catch(console.warn);
-  }
+    this.videoPlayerRef
+      .getPreviewForSecond(second, maximumSize) // maximumSize is iOS only
+      .then(base64String =>
+        console.log("This is BASE64 of image", base64String),
+      )
+      .catch(console.warn);
+  };
 
   getVideoInfo = () => {
-    this.videoPlayerRef.getVideoInfo()
-    .then((info) => console.log(info))
-    .catch(console.warn);
-  }
+    this.videoPlayerRef
+      .getVideoInfo()
+      .then(info => console.log(info))
+      .catch(console.warn);
+  };
+
+  moveTrimmer = e => {
+    this.setState({
+      startTime: e.startTime,
+      currentTime: e.startTime,
+    });
+  };
 
   render() {
+    let source = this.state.source || this.props.source;
     return (
-      <View style={{ flex: 1 }}>
-        <Modal
-          transparent
-          animationType="slide"
-          presentationStyle="overFullScreen"
-          visible={this.state.showModal}
-          >
-            <View style={styles.modalBackground}>
-              <View style={styles.modalContainer}>
-                <Text style={styles.modalCopy}>Add Photos From</Text>
-                <View style={styles.modalButtonContainer}>
-                  <TouchableOpacity
-                    style={styles.modalButton}
-                    onPress={this.openPicker}
-                    >
-                      <Text style={styles.modalButtonText}>Photo Library</Text>
-                    </TouchableOpacity>
-                    </View>
-                  </View>
-                  </View>
-                </Modal>
-                <VideoPlayer
-                  ref={ref => this.videoPlayerRef = ref}
-                  startTime={30}  // seconds
-                  endTime={120}   // seconds
-                  play={true}     // default false
-                  replay={true}   // should player play video again if it's ended
-                  rotate={true}   // use this prop to rotate video if it captured in landscape mode iOS only
-                  source={this.state.source}
-                  playerWidth={300} // iOS only
-                  playerHeight={500} // iOS only
-                  style={{ backgroundColor: 'white' }}
-                  resizeMode={VideoPlayer.Constants.resizeMode.CONTAIN}
-                  onChange={({ nativeEvent }) => console.log({ nativeEvent })} // get Current time on every second
-                />
-                {/* <Trimmer
-                  source={this.state.source}
-                  height={100}
-                  width={300}
-                  onTrackerMove={(e) => console.log(e.currentTime)} // iOS only
-                  currentTime={this.video.currentTime} // use this prop to set tracker position iOS only
-                  themeColor={'white'} // iOS only
-                  thumbWidth={30} // iOS only
-                  trackerColor={'green'} // iOS only
-                  onChange={(e) => console.log(e.startTime, e.endTime)}
-                /> */}
-              </View>
-            );
-          }
-        }
+      <View>
+        <View>
+          <VideoPlayer
+            ref={ref => (this.videoPlayerRef = ref)}
+            startTime={this.state.startTime} // seconds
+            currentTime={this.state.currentTime}
+            endTime={this.state.endTime} // seconds
+            play={this.state.play} // default false
+            replay={true} // should player play video again if it's ended
+            source={source}
+            playerWidth={Dimensions.get("window").width} // iOS only
+            playerHeight={300} // iOS only
+            resizeMode={VideoPlayer.Constants.resizeMode.CONTAIN}
+            onPress={this.play}
+            // onChange={({ nativeEvent }) => console.log({ nativeEvent })} // get Current time on every second
+          />
+        </View>
+        <View style={{ paddingTop: 300 }}>
+          <Trimmer
+            source={source}
+            height={50}
+            width={Dimensions.get("window").width}
+            onChange={this.moveTrimmer}
+          />
+        </View>
+        <View>
+          <TouchableOpacity
+            style={{ backgroundColor: "blue", margin: 50 }}
+            onPress={this.play}>
+            <Text>Play</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ backgroundColor: "red", margin: 50 }}
+            onPress={this.trimVideo}>
+            <Text>Trim</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    );
+  }
+}
