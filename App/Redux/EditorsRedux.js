@@ -5,9 +5,10 @@ import Immutable from "seamless-immutable";
 
 const { Types, Creators } = createActions({
   editorsAddVideos: ["videos"],
+  editorsUpdateVideo: ["video"],
   editorsRequest: ["data"],
   editorsSuccess: ["payload"],
-  editorsFailure: null,
+  editorsFailure: null
 });
 
 export const EditorsTypes = Types;
@@ -20,13 +21,13 @@ export const INITIAL_STATE = Immutable({
   fetching: null,
   payload: null,
   error: null,
-  videos: [],
+  videos: []
 });
 
 /* ------------- Selectors ------------- */
 
 export const EditorsSelectors = {
-  getData: state => state.data,
+  getData: state => state.data
 };
 
 /* ------------- Reducers ------------- */
@@ -49,11 +50,26 @@ export const addVideos = (state, action) => {
   const { videos } = action;
   return state.merge({ videos });
 };
+
+export const updateVideo = (state, action) => {
+  const { newSource, oldSource } = action.video;
+  let newVideos = Immutable.asMutable(state.videos);
+  for (let vid in newVideos) {
+    if (newVideos[vid].path === oldSource) {
+      let video = Immutable.asMutable(newVideos[vid]);
+      video.path = newSource;
+      newVideos[vid] = video;
+    }
+  }
+  return state.merge({ videos: newVideos });
+};
+
 /* ------------- Hookup Reducers To Types ------------- */
 
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.EDITORS_ADD_VIDEOS]: addVideos,
+  [Types.EDITORS_UPDATE_VIDEO]: updateVideo,
   [Types.EDITORS_REQUEST]: request,
   [Types.EDITORS_SUCCESS]: success,
-  [Types.EDITORS_FAILURE]: failure,
+  [Types.EDITORS_FAILURE]: failure
 });

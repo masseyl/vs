@@ -13,14 +13,15 @@ class EditorsScreen extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      videoPath: "",
+      videoPath: ""
     };
   }
+
   openPicker = () => {
     const attachments = [];
     ImagePicker.openPicker({
       mediaType: "video",
-      multiple: true,
+      multiple: true
       // includeBase64: true
     })
       .then(videos => {
@@ -28,14 +29,14 @@ class EditorsScreen extends Component {
       })
       .catch(err => {
         this.setState({
-          cancelled: true,
+          cancelled: true
         });
       });
   };
 
   clickThumbnail = videoPath => {
     this.setState({
-      videoPath: videoPath,
+      videoPath: videoPath
     });
   };
 
@@ -43,11 +44,29 @@ class EditorsScreen extends Component {
     if (this.state.videoPath) {
       return (
         <View>
-          <Editor source={this.state.videoPath} />
+          <Editor
+            updateVideo={this.updateVideo}
+            source={this.state.videoPath}
+            done={() => {
+              this.setState({
+                videoPath: ""
+              });
+            }}
+          />
         </View>
       );
     }
     return null;
+  };
+
+  updateVideo = (newSource, oldSource) => {
+    this.props.updateVideo({
+      newSource: newSource,
+      oldSource: oldSource
+    });
+    this.setState({
+      videoPath: newSource
+    });
   };
 
   render() {
@@ -57,11 +76,13 @@ class EditorsScreen extends Component {
         style={{
           flex: 1,
           position: "absolute",
-          top: 30,
-        }}>
+          top: 30
+        }}
+      >
         <TouchableOpacity
           style={{ backgroundColor: "blue", margin: 10 }}
-          onPress={this.openPicker}>
+          onPress={this.openPicker}
+        >
           <Text>Kick me</Text>
         </TouchableOpacity>
         <View
@@ -69,13 +90,13 @@ class EditorsScreen extends Component {
             flex: 1,
             flexWrap: "wrap",
             flexDirection: "row",
-            justifyContent: "space-between",
-          }}>
+            justifyContent: "space-between"
+          }}
+        >
           {videos.map((video, index) => {
             return (
-              <View style={{ padding: 5 }}>
+              <View key={index} style={{ padding: 5 }}>
                 <Thumbnail
-                  key={index}
                   source={video.path}
                   showVideo={this.clickThumbnail}
                 />
@@ -91,7 +112,7 @@ class EditorsScreen extends Component {
 
 const mapStateToProps = state => {
   return {
-    videos: state.editors,
+    videos: state.editors
   };
 };
 
@@ -100,6 +121,9 @@ const mapDispatchToProps = dispatch => {
     addVideos: videos => {
       dispatch(EditorsActions.editorsAddVideos(videos));
     },
+    updateVideo: sources => {
+      dispatch(EditorsActions.editorsUpdateVideo(sources));
+    }
   };
 };
 

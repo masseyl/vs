@@ -6,7 +6,7 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Dimensions,
+  Dimensions
 } from "react-native";
 import { VideoPlayer, Trimmer } from "react-native-video-processing";
 
@@ -16,26 +16,30 @@ export default class Editor extends Component {
   constructor(props) {
     super(props);
     this.video = {
-      currentTime: 0,
+      currentTime: 0
     };
     this.state = {
       play: true,
       source: "",
       currentTime: 0,
       startTime: 0,
-      endTime: 86400,
+      endTime: 86400
     };
   }
 
   componentDidMount() {
     this.setState({
-      source: this.props.source,
+      source: this.props.source
     });
   }
 
+  done = () => {
+    this.props.done();
+  };
+
   play = () => {
     this.setState({
-      play: !this.state.play,
+      play: !this.state.play
     });
   };
 
@@ -45,45 +49,18 @@ export default class Editor extends Component {
       endTime: this.state.endTime,
       quality: VideoPlayer.Constants.quality.QUALITY_1280x720, // iOS only
       saveToCameraRoll: true, // default is false // iOS only
-      saveWithCurrentDate: true, // default is false // iOS only
+      saveWithCurrentDate: true // default is false // iOS only
     };
     this.videoPlayerRef
       .trim(options)
-      .then(newSource =>
-        this.setState({
-          source: newSource,
-        }),
-      )
-      .catch(console.warn);
-  };
-
-  compressVideo = () => {
-    const options = {
-      width: 720,
-      height: 1280,
-      bitrateMultiplier: 3,
-      saveToCameraRoll: true, // default is false, iOS only
-      saveWithCurrentDate: true, // default is false, iOS only
-      minimumBitrate: 300000,
-      removeAudio: true, // default is false
-    };
-    this.videoPlayerRef
-      .compress(options)
-      .then(newSource => console.log(newSource))
-      .catch(console.warn);
-  };
-
-  getVideoInfo = () => {
-    this.videoPlayerRef
-      .getVideoInfo()
-      .then(info => console.log(info))
+      .then(newSource => this.props.updateVideo(newSource, this.props.source))
       .catch(console.warn);
   };
 
   moveTrimmer = e => {
     this.setState({
       startTime: e.startTime,
-      currentTime: e.startTime,
+      currentTime: e.startTime
     });
   };
 
@@ -101,13 +78,13 @@ export default class Editor extends Component {
             replay={true} // should player play video again if it's ended
             source={source}
             playerWidth={Dimensions.get("window").width} // iOS only
-            playerHeight={300} // iOS only
+            playerHeight={250} // iOS only
             resizeMode={VideoPlayer.Constants.resizeMode.CONTAIN}
             onPress={this.play}
             // onChange={({ nativeEvent }) => console.log({ nativeEvent })} // get Current time on every second
           />
         </View>
-        <View style={{ paddingTop: 300 }}>
+        <View style={{ paddingTop: 250 }}>
           <Trimmer
             source={source}
             height={50}
@@ -117,14 +94,22 @@ export default class Editor extends Component {
         </View>
         <View>
           <TouchableOpacity
-            style={{ backgroundColor: "blue", margin: 50 }}
-            onPress={this.play}>
+            style={{ backgroundColor: "blue", margin: 10 }}
+            onPress={this.play}
+          >
             <Text>Play</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={{ backgroundColor: "red", margin: 50 }}
-            onPress={this.trimVideo}>
+            style={{ backgroundColor: "red", margin: 10 }}
+            onPress={this.trimVideo}
+          >
             <Text>Trim</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={{ backgroundColor: "green", margin: 10 }}
+            onPress={this.done}
+          >
+            <Text>Done</Text>
           </TouchableOpacity>
         </View>
       </View>

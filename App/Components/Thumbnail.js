@@ -8,12 +8,12 @@ export default class Thumbnail extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      thumbnail: "",
+      thumbnail: ""
     };
   }
   componentDidMount() {
     setTimeout(() => {
-      console.log(this.getPreviewImageForSecond(this.props.source, 5));
+      this.getPreviewImageForSecond(this.props.source, 0);
     }, 100);
   }
   getPreviewImageForSecond = (path, second) => {
@@ -21,7 +21,7 @@ export default class Thumbnail extends Component {
     ProcessingManager.getPreviewForSecond(path, second, maximumSize, "base64") // maximumSize is iOS only
       .then(base64String => {
         this.setState({
-          thumbnail: base64String,
+          thumbnail: base64String
         });
       })
       .catch(console.warn);
