@@ -13,6 +13,7 @@
 		00C302E91ABCBA2D00DB3ED1 /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
 		00C302EA1ABCBA2D00DB3ED1 /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
 		00E356F31AD99517003FC87E /* VSTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 00E356F21AD99517003FC87E /* VSTests.m */; };
+		0412C34B20191F640028BF17 /* libRCTCameraRoll.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0412C32A20191F470028BF17 /* libRCTCameraRoll.a */; };
 		041387F52011CFE000866659 /* RNVideoPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041387F02011CFDB00866659 /* RNVideoPlayer.swift */; };
 		041387F62011CFE000866659 /* RNVideoProcessingManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 041387F12011CFE000866659 /* RNVideoProcessingManager.swift */; };
 		041387F72011CFE000866659 /* RNVideoProcessingBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 041387F32011CFE000866659 /* RNVideoProcessingBridge.m */; };
@@ -126,6 +127,13 @@
 			proxyType = 2;
 			remoteGlobalIDString = 134814201AA4EA6300B7C361;
 			remoteInfo = RNVideoEditor;
+		};
+		0412C32920191F470028BF17 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0412C31D20191F470028BF17 /* RCTCameraRoll.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 58B5115D1A9E6B3D00147676;
+			remoteInfo = RCTCameraRoll;
 		};
 		041387D22011CF4A00866659 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -406,6 +414,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* VSTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = VSTests.m; sourceTree = "<group>"; };
 		01EE3444C7DB63089EDAB1DF /* Pods_VS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_VS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		0412C31D20191F470028BF17 /* RCTCameraRoll.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTCameraRoll.xcodeproj; path = "../node_modules/react-native/Libraries/CameraRoll/RCTCameraRoll.xcodeproj"; sourceTree = "<group>"; };
 		041387EE2011CFD900866659 /* VS-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "VS-Bridging-Header.h"; sourceTree = "<group>"; };
 		041387EF2011CFDB00866659 /* RNVideoProcessing.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNVideoProcessing.h; path = "../../node_modules/react-native-video-processing/ios/RNVideoProcessing/RNVideoProcessing.h"; sourceTree = "<group>"; };
 		041387F02011CFDB00866659 /* RNVideoPlayer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = RNVideoPlayer.swift; path = "../../node_modules/react-native-video-processing/ios/RNVideoProcessing/RNVideoPlayer.swift"; sourceTree = "<group>"; };
@@ -493,6 +502,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0412C34B20191F640028BF17 /* libRCTCameraRoll.a in Frameworks */,
 				0413882D2011D1AA00866659 /* MobileCoreServices.framework in Frameworks */,
 				0413882B2011D16200866659 /* GPUImage.framework in Frameworks */,
 				0413882A2011D15B00866659 /* QuartzCore.framework in Frameworks */,
@@ -610,6 +620,14 @@
 			isa = PBXGroup;
 			children = (
 				0410D5612017F54E0066FFA0 /* libRNVideoEditor.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0412C31E20191F470028BF17 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				0412C32A20191F470028BF17 /* libRCTCameraRoll.a */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -796,6 +814,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				0412C31D20191F470028BF17 /* RCTCameraRoll.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -1040,6 +1059,10 @@
 					ProjectRef = ADBDB91F1DFEBF0600ED6528 /* RCTBlob.xcodeproj */;
 				},
 				{
+					ProductGroup = 0412C31E20191F470028BF17 /* Products */;
+					ProjectRef = 0412C31D20191F470028BF17 /* RCTCameraRoll.xcodeproj */;
+				},
+				{
 					ProductGroup = 00C302B61ABCB90400DB3ED1 /* Products */;
 					ProjectRef = 00C302B51ABCB90400DB3ED1 /* RCTGeolocation.xcodeproj */;
 				},
@@ -1135,6 +1158,13 @@
 			fileType = archive.ar;
 			path = libRNVideoEditor.a;
 			remoteRef = 0410D5602017F54E0066FFA0 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		0412C32A20191F470028BF17 /* libRCTCameraRoll.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTCameraRoll.a;
+			remoteRef = 0412C32920191F470028BF17 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		041387D32011CF4A00866659 /* libRCTBlob-tvOS.a */ = {

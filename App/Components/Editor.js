@@ -64,7 +64,8 @@ export default class Editor extends Component {
   moveTrimmer = e => {
     this.setState({
       startTime: e.startTime,
-      currentTime: e.startTime
+      currentTime: e.startTime,
+      endTime: e.endTime
     });
   };
 

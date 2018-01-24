@@ -1,5 +1,11 @@
 import React, { Component } from "react";
-import { ScrollView, Text, View, TouchableOpacity } from "react-native";
+import {
+  ScrollView,
+  Text,
+  View,
+  TouchableOpacity,
+  CameraRoll
+} from "react-native";
 import { connect } from "react-redux";
 // Add Actions - replace 'Your' with whatever your reducer is called :)
 import EditorsActions from "../Redux/EditorsRedux";
@@ -38,6 +44,7 @@ class EditorsScreen extends Component {
         this.setState({
           videoPath: `file://${file}`
         });
+        CameraRoll.saveToCameraRoll(file);
       }
     );
   };
