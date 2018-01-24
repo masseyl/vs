@@ -71,17 +71,15 @@ export default class Editor extends Component {
         <View>
           <VideoPlayer
             ref={ref => (this.videoPlayerRef = ref)}
-            startTime={this.state.startTime} // seconds
+            startTime={this.state.startTime}
             currentTime={this.state.currentTime}
-            endTime={this.state.endTime} // seconds
-            play={this.state.play} // default false
-            replay={true} // should player play video again if it's ended
+            endTime={this.state.endTime}
+            play={this.state.play}
             source={source}
             playerWidth={Dimensions.get("window").width} // iOS only
             playerHeight={250} // iOS only
-            resizeMode={VideoPlayer.Constants.resizeMode.CONTAIN}
+            resizeMode={VideoPlayer.Constants.resizeMode.NONE}
             onPress={this.play}
-            // onChange={({ nativeEvent }) => console.log({ nativeEvent })} // get Current time on every second
           />
         </View>
         <View style={{ paddingTop: 250 }}>

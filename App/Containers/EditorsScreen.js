@@ -6,6 +6,9 @@ import EditorsActions from "../Redux/EditorsRedux";
 import Editor from "../Components/Editor";
 import Thumbnail from "../Components/Thumbnail";
 import ImagePicker from "react-native-image-crop-picker";
+import RNVideoEditor from "react-native-video-editor";
+import Immutable from "seamless-immutable";
+
 // Styles
 import styles from "./Styles/EditorsScreenStyle";
 
@@ -16,6 +19,28 @@ class EditorsScreen extends Component {
       videoPath: ""
     };
   }
+
+  merge = () => {
+    const videos = this.props.videos.videos;
+    let paths = [];
+    for (let vid in videos) {
+      let path = videos[vid].path.split("file://")[1];
+      paths.push(path);
+    }
+
+    RNVideoEditor.merge(
+      paths,
+      results => {
+        console.log("Error: " + results);
+      },
+      (results, file) => {
+        console.log("Success : " + results + " file: " + file);
+        this.setState({
+          videoPath: `file://${file}`
+        });
+      }
+    );
+  };
 
   openPicker = () => {
     const attachments = [];
@@ -84,6 +109,12 @@ class EditorsScreen extends Component {
           onPress={this.openPicker}
         >
           <Text>Kick me</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{ backgroundColor: "blue", margin: 10 }}
+          onPress={this.merge}
+        >
+          <Text>Merge</Text>
         </TouchableOpacity>
         <View
           style={{
