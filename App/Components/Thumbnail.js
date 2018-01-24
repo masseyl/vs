@@ -13,7 +13,7 @@ export default class Thumbnail extends Component {
   }
   componentDidMount() {
     setTimeout(() => {
-      this.getPreviewImageForSecond(this.props.source, 0);
+      this.getPreviewImageForSecond(this.props.source, 5);
     }, 100);
   }
   getPreviewImageForSecond = (path, second) => {

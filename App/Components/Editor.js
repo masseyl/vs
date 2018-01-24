@@ -6,7 +6,8 @@ import {
   Text,
   TouchableOpacity,
   Image,
-  Dimensions
+  Dimensions,
+  Platform
 } from "react-native";
 import { VideoPlayer, Trimmer } from "react-native-video-processing";
 
@@ -47,7 +48,10 @@ export default class Editor extends Component {
     const options = {
       startTime: this.state.startTime,
       endTime: this.state.endTime,
-      quality: VideoPlayer.Constants.quality.QUALITY_1280x720, // iOS only
+      quality:
+        Platform.OS === "ios"
+          ? VideoPlayer.Constants.quality.QUALITY_1280x720
+          : null, // iOS only
       saveToCameraRoll: true, // default is false // iOS only
       saveWithCurrentDate: true // default is false // iOS only
     };
@@ -76,8 +80,10 @@ export default class Editor extends Component {
             endTime={this.state.endTime}
             play={this.state.play}
             source={source}
-            playerWidth={Dimensions.get("window").width} // iOS only
-            playerHeight={250} // iOS only
+            playerWidth={
+              Platform.OS === "ios" ? Dimensions.get("window").width : null
+            } // iOS only
+            playerHeight={Platform.OS === "ios" ? 250 : null} // iOS only
             resizeMode={VideoPlayer.Constants.resizeMode.NONE}
             onPress={this.play}
           />
