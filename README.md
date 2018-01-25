@@ -51,3 +51,8 @@
     * [React Native Sortable Grid](https://github.com/ollija/react-native-sortable-grid)
 * BoilerPlate
     * [Ignite](https://github.com/infinitered/ignite)
+    
+## Lance's custom code
+  * [Components](https://github.com/masseyl/vs/tree/master/App/Components)
+  * [Main Container](https://github.com/masseyl/vs/blob/master/App/Containers/EditorsScreen.js)
+  * [Redux](https://github.com/masseyl/vs/blob/master/App/Redux/EditorsRedux.js)
