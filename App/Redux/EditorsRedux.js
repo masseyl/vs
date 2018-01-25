@@ -54,11 +54,12 @@ export const addVideos = (state, action) => {
 
 export const dragVideos = (state, action) => {
   const paths = action.videos.itemOrder;
-  let newVideos = new Array(paths.length);
-  for (let vid in newVideos) {
-    newVideos[vid] = {
-      path: paths[vid].key
+  let newVideos = [];
+  for (let item in paths) {
+    let path = {
+      path: paths[item].key
     };
+    newVideos.push(path);
   }
   return state.merge({ videos: newVideos });
 };

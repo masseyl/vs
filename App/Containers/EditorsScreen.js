@@ -45,7 +45,7 @@ class EditorsScreen extends Component {
         this.setState({
           videoPath: `file://${file}`
         });
-        CameraRoll.saveToCameraRoll(file);
+        CameraRoll.saveToCameraRoll(`file://${file}`);
       }
     );
   };
