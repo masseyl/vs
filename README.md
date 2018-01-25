@@ -49,5 +49,5 @@
     * [React Native Image Crop Picker](https://github.com/ivpusic/react-native-image-crop-picker)
 * For drag and drop
     * [React Native Sortable Grid](https://github.com/ollija/react-native-sortable-grid)
-* BiolerPlate
+* BoilerPlate
     * [Ignite](https://github.com/infinitered/ignite)
