@@ -28,7 +28,7 @@
     
 ## Usage:
 
-1. After app opens, Select videos. iOS allows multiple selection
+1. After app opens, select videos. _iOS allows multiple selection_
 2. Processing takes a while, so wait
 3. Click on a thumbnail to see a video
   a. trim beginning and end by dragging the side bars
