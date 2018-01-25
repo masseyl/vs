@@ -59,7 +59,7 @@ class EditorsScreen extends Component {
         // save the selection to redux
         this.props.addVideos(videos);
       })
-      .catch(err => {
+      .catch((err, res) => {
         console.warn(err);
       });
   };
