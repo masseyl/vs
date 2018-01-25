@@ -30,7 +30,7 @@ class EditorsScreen extends Component {
 
   // Take the list of edited videos, create a file of the merged videos,  and save
   // it to the local file system
-  merge = () => {
+  mergeEdits = () => {
     const videos = this.props.videos.videos;
     let paths = [];
     for (let vid in videos) {
