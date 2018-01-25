@@ -1,7 +1,10 @@
 #  VS
-[![js-standard-style](https://img.shields.io/badge/code%20style-standard-brightgreen.svg?style=flat)](http://standardjs.com/)
-
-* Standard compliant React Native App Utilizing [Ignite](https://github.com/infinitered/ignite)
+  * A simple video trimming/sticthing example
+  
+## Lance's custom code
+  * [Components](https://github.com/masseyl/vs/tree/master/App/Components)
+  * [Main Container](https://github.com/masseyl/vs/blob/master/App/Containers/EditorsScreen.js)
+  * [Redux](https://github.com/masseyl/vs/blob/master/App/Redux/EditorsRedux.js)
 
 ## :arrow_up: How to Setup
 
@@ -26,7 +29,7 @@
       * Run Genymotion
     * run `react-native run-android`
     
-## Usage:
+## :arrow_forward: Usage:
 
 1. After app opens, select videos. _iOS allows multiple selection_
 2. Processing takes a while, so wait
@@ -40,7 +43,7 @@
 7. Keep waiting
 8. Your newly edited video should show up in the player as well as the CameraRoll
 
-## Libraries used:
+## :arrow_forward: Libraries used:
   * For video trimming, and thumbnails
     * [React Native Video Processing](https://github.com/shahen94/react-native-video-processing)
   * For video stitching
@@ -52,7 +55,3 @@
 * BoilerPlate
     * [Ignite](https://github.com/infinitered/ignite)
     
-## Lance's custom code
-  * [Components](https://github.com/masseyl/vs/tree/master/App/Components)
-  * [Main Container](https://github.com/masseyl/vs/blob/master/App/Containers/EditorsScreen.js)
-  * [Redux](https://github.com/masseyl/vs/blob/master/App/Redux/EditorsRedux.js)
