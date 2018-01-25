@@ -23,4 +23,13 @@
     * run `react-native run-android`
 
 ## Libraries used:
-* React Native Video Processing [https://github.com/shahen94/react-native-video-processing]
+  * For video trimming, and thumbnails
+    * [React Native Video Processing](https://github.com/shahen94/react-native-video-processing)
+  * For video stitching
+    * [React Native Video Editor](https://github.com/mostwantit/react-native-video-editor)
+* For video selection
+    * [React Native Image Crop Picker](https://github.com/ivpusic/react-native-image-crop-picker)
+* For drag and drop
+    * [React Native Sortable Grid](https://github.com/ollija/react-native-sortable-grid)
+* BiolerPlate
+    * [Ignite](https://github.com/infinitered/ignite)
