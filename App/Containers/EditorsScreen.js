@@ -8,16 +8,17 @@ import {
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
-// Add Actions - replace 'Your' with whatever your reducer is called :)
-import EditorsActions from "../Redux/EditorsRedux";
-import Editor from "../Components/Editor";
-import Thumbnail from "../Components/Thumbnail";
 import ImagePicker from "react-native-image-crop-picker";
 import RNVideoEditor from "react-native-video-editor";
 import Immutable from "seamless-immutable";
-import SortableGrid from "react-native-sortable-grid";
+// custom components
+import Editor from "../Components/Editor";
+import Header from "../Components/Header";
+import ThumbnailGrid from "../Components/ThumbnailGrid";
 // Styles
 import styles from "./Styles/EditorsScreenStyle";
+// Redux
+import EditorsActions from "../Redux/EditorsRedux";
 
 class EditorsScreen extends Component {
   constructor(props) {
@@ -27,29 +28,34 @@ class EditorsScreen extends Component {
     };
   }
 
+  // Take the list of edited videos, create a file of the merged videos,  and save
+  // it to the local file system
   merge = () => {
     const videos = this.props.videos.videos;
     let paths = [];
     for (let vid in videos) {
+      // get the file paths
       let path = videos[vid].path.split("file://")[1];
       paths.push(path);
     }
-
+    // use the native module to do the magic
     RNVideoEditor.merge(
       paths,
       results => {
         console.log("Error: " + results);
       },
       (results, file) => {
-        console.log("Success : " + results + " file: " + file);
+        // update the view
         this.setState({
           videoPath: `file://${file}`
         });
+        // save it to the system
         CameraRoll.saveToCameraRoll(`file://${file}`);
       }
     );
   };
 
+  // Open the local photo gallery
   openPicker = () => {
     const attachments = [];
     ImagePicker.openPicker({
@@ -58,25 +64,28 @@ class EditorsScreen extends Component {
       maxFiles: 12
     })
       .then(videos => {
+        // save the selection to redux
         this.props.addVideos(videos);
       })
       .catch(err => {
-        this.setState({
-          cancelled: true
-        });
+        console.warn(err);
       });
   };
 
+  // update video showing in the editor
   clickThumbnail = videoPath => {
     this.setState({
       videoPath: videoPath
     });
   };
 
+  // thumbnails can be dragged so send the new order into redux
   dragRelease = itemOrder => {
     this.props.dragVideos(itemOrder);
   };
 
+  // the way trim works is it creates a new file each time, so we need to
+  // swap out the references here
   updateVideo = (newSource, oldSource) => {
     this.props.updateVideo({
       newSource: newSource,
@@ -90,17 +99,19 @@ class EditorsScreen extends Component {
   showEditor = () => {
     if (this.state.videoPath) {
       return (
-        <ScrollView containerStyle={{ flex: 1, height: 800 }}>
-          <Editor
-            updateVideo={this.updateVideo}
-            source={this.state.videoPath}
-            done={() => {
-              this.setState({
-                videoPath: ""
-              });
-            }}
-          />
-        </ScrollView>
+        <View>
+          <ScrollView containerStyle={{ flex: 1, height: 800 }}>
+            <Editor
+              updateVideo={this.updateVideo}
+              source={this.state.videoPath}
+              done={() => {
+                this.setState({
+                  videoPath: ""
+                });
+              }}
+            />
+          </ScrollView>
+        </View>
       );
     }
     return null;
@@ -109,53 +120,20 @@ class EditorsScreen extends Component {
   render() {
     const videos = this.props.videos.videos;
     return (
-      <View
-        style={{
-          flex: 1,
-          position: "absolute",
-          top: 30
-        }}
-      >
-        <TouchableOpacity
-          style={{ backgroundColor: "blue", margin: 10 }}
-          onPress={this.openPicker}
-        >
-          <Text>Kick me</Text>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={{ backgroundColor: "blue", margin: 10 }}
-          onPress={this.merge}
-        >
-          <Text>Merge</Text>
-        </TouchableOpacity>
-        <SortableGrid
-          onDragRelease={this.dragRelease}
-          bottomPadding
-          style={{ flex: 1, width: Dimensions.get("window").width }}
-        >
-          {videos.map((video, index) => {
-            return (
-              <View
-                key={video.path}
-                style={{
-                  borderWidth: 5,
-                  padding: 4,
-                  backgroundColor: "grey",
-                  borderStyle: "dashed",
-                  width: 90,
-                  height: 90
-                }}
-              >
-                <Thumbnail
-                  source={video.path}
-                  showVideo={this.clickThumbnail}
-                />
-              </View>
-            );
-          })}
-        </SortableGrid>
-
-        {this.showEditor()}
+      <View style={styles.container}>
+        <Header
+          openPicker={this.openPicker}
+          mergeEdits={this.mergeEdits}
+          videos={videos}
+        />
+        <ScrollView>
+          <ThumbnailGrid
+            dragRelease={this.dragRelease}
+            videos={videos}
+            click={this.clickThumbnail}
+          />
+          {this.showEditor()}
+        </ScrollView>
       </View>
     );
   }

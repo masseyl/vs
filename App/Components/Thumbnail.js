@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import { TouchableOpacity, Image } from "react-native";
 import styles from "./Styles/ThumbnailStyle";
 import { ProcessingManager } from "react-native-video-processing";
@@ -33,30 +33,17 @@ export default class Thumbnail extends Component {
 
   render() {
     return (
-      <TouchableOpacity
-        style={[
-          styles.container,
-          {
-            flex: 1
-          }
-        ]}
-        onPress={this.showMyVideo}
-      >
+      <TouchableOpacity style={styles.container} onPress={this.showMyVideo}>
         <Image
-          style={{ width: 72, height: 72 }}
+          style={styles.image}
           source={{ uri: `data:image/gif;base64,${this.state.thumbnail}` }}
         />
       </TouchableOpacity>
     );
   }
 }
-// // Prop type warnings
-// static propTypes = {
-//   someProperty: PropTypes.object,
-//   someSetting: PropTypes.bool.isRequired,
-// }
-//
-// // Defaults for props
-// static defaultProps = {
-//   someSetting: false
-// }
+
+Thumbnail.propTypes = {
+  showVideo: PropTypes.func,
+  source: PropTypes.string
+};
