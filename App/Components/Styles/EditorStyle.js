@@ -1,4 +1,4 @@
-import { StyleSheet } from "react-native";
+import { StyleSheet } from 'react-native'
 
 export default StyleSheet.create({
   container: {
@@ -7,11 +7,14 @@ export default StyleSheet.create({
     width: 500,
     marginLeft: 300
   },
-  containerStyle: {},
+  scrollStyle: {
+    flex: 1,
+    height: 800
+  },
   player: {
     paddingBottom: 6
   },
   trimmer: {
     paddingTop: 230
   }
-});
+})

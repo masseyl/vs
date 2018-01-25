@@ -1,17 +1,17 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { View, Text, TouchableOpacity } from "react-native";
-import styles from "./Styles/EditorControlsStyle";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { View, Text, TouchableOpacity } from 'react-native'
+import styles from './Styles/EditorControlsStyle'
 
 export default class EditorControls extends Component {
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TouchableOpacity
           style={[styles.button, styles.playButton]}
           onPress={this.props.play}
         >
-          <Text>{this.props.playing ? "Stop" : "Play"}</Text>
+          <Text>{this.props.playing ? 'Stop' : 'Play'}</Text>
         </TouchableOpacity>
         <TouchableOpacity
           style={[styles.button, styles.trimButton]}
@@ -26,7 +26,7 @@ export default class EditorControls extends Component {
           <Text>Done</Text>
         </TouchableOpacity>
       </View>
-    );
+    )
   }
 }
 
@@ -35,4 +35,4 @@ EditorControls.propTypes = {
   play: PropTypes.func,
   playing: PropTypes.bool,
   trimVideo: PropTypes.func
-};
+}

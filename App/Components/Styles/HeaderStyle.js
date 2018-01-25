@@ -1,17 +1,17 @@
-import { StyleSheet, Dimensions } from "react-native";
+import { StyleSheet, Dimensions } from 'react-native'
 
-const width = Dimensions.get("window").width;
+const width = Dimensions.get('window').width
 export default StyleSheet.create({
   container: {
     width: width,
-    justifyContent: "center",
-    alignItems: "center"
+    justifyContent: 'center',
+    alignItems: 'center'
   },
   openPicker: {
-    backgroundColor: "pink",
+    backgroundColor: 'pink',
     padding: 20,
     borderRadius: 28,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -21,11 +21,11 @@ export default StyleSheet.create({
     fontSize: 24
   },
   mergeEdits: {
-    backgroundColor: "red",
+    backgroundColor: 'red',
     margin: 20,
     padding: 5,
     borderRadius: 28,
-    shadowColor: "#000",
+    shadowColor: '#000',
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.8,
     shadowRadius: 2,
@@ -33,6 +33,6 @@ export default StyleSheet.create({
   },
   mergeEditsText: {
     fontSize: 24,
-    color: "white"
+    color: 'white'
   }
-});
+})

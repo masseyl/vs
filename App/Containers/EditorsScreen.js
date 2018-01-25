@@ -1,12 +1,5 @@
 import React, { Component } from "react";
-import {
-  ScrollView,
-  Text,
-  View,
-  TouchableOpacity,
-  CameraRoll,
-  Dimensions
-} from "react-native";
+import { ScrollView, View, CameraRoll } from "react-native";
 import { connect } from "react-redux";
 // native modules
 import ImagePicker from "react-native-image-crop-picker";
@@ -57,7 +50,6 @@ class EditorsScreen extends Component {
 
   // Open the local photo gallery
   openPicker = () => {
-    const attachments = [];
     ImagePicker.openPicker({
       mediaType: "video",
       multiple: true,

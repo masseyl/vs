@@ -1,14 +1,6 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import {
-  ScrollView,
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Dimensions,
-  Platform
-} from "react-native";
+import { ScrollView, View, Dimensions, Platform } from "react-native";
 import { VideoPlayer, Trimmer } from "react-native-video-processing";
 
 import styles from "./Styles/EditorStyle";
@@ -52,9 +44,9 @@ export default class Editor extends Component {
       quality:
         Platform.OS === "ios"
           ? VideoPlayer.Constants.quality.QUALITY_1280x720
-          : null, // iOS only
-      saveToCameraRoll: true, // default is false // iOS only
-      saveWithCurrentDate: true // default is false // iOS only
+          : null,
+      saveToCameraRoll: true, // iOS only
+      saveWithCurrentDate: true // iOS only
     };
     this.videoPlayerRef
       .trim(options)
@@ -74,24 +66,31 @@ export default class Editor extends Component {
 
   render() {
     let source = this.props.source;
+    let playerProps = {
+      startTime: this.state.startTime,
+      currentTime: this.state.currentTime,
+      endTime: this.state.endTime,
+      play: this.state.play,
+      source: source,
+      playerWidth: Dimensions.get("window").width,
+      onPress: this.play
+    };
+    if (Platform.OS === "ios") {
+      playerProps = {
+        ...playerProps,
+        playerHeight: 250,
+        resizeMode: VideoPlayer.Constants.resizeMode.NONE
+      };
+    }
+
     return (
       <View>
-        <ScrollView containerStyle={{ flex: 1, height: 800 }}>
+        <ScrollView containerStyle={styles.scrollStyle}>
           <View>
             <VideoPlayer
+              {...playerProps}
               style={styles.player}
               ref={ref => (this.videoPlayerRef = ref)}
-              startTime={this.state.startTime}
-              currentTime={this.state.currentTime}
-              endTime={this.state.endTime}
-              play={this.state.play}
-              source={source}
-              playerWidth={
-                Platform.OS === "ios" ? Dimensions.get("window").width : null
-              } // iOS only
-              playerHeight={Platform.OS === "ios" ? 250 : null} // iOS only
-              resizeMode={VideoPlayer.Constants.resizeMode.NONE}
-              onPress={this.play}
             />
           </View>
           <View style={styles.trimmer}>

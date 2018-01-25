@@ -1,12 +1,12 @@
-import React, { Component } from "react";
-import PropTypes from "prop-types";
-import { View, Text, TouchableOpacity } from "react-native";
-import styles from "./Styles/HeaderStyle";
+import React, { Component } from 'react'
+import PropTypes from 'prop-types'
+import { View, Text, TouchableOpacity } from 'react-native'
+import styles from './Styles/HeaderStyle'
 
 // Shows "Select Video Button"
 // if videos are selected shows the "OK - make a new stitched together video" button
 export default class Header extends Component {
-  render() {
+  render () {
     return (
       <View style={styles.container}>
         <TouchableOpacity
@@ -25,7 +25,7 @@ export default class Header extends Component {
             </TouchableOpacity>
           )}
       </View>
-    );
+    )
   }
 }
 
@@ -33,4 +33,4 @@ Header.propTypes = {
   openPicker: PropTypes.func,
   mergeEdits: PropTypes.func,
   videos: PropTypes.array
-};
+}
