@@ -24,7 +24,21 @@
       * make sure you're using JRE 1.8 
     * if not on device
       * Run Genymotion
-      * run `react-native run-android`
+    * run `react-native run-android`
+    
+## Usage:
+
+1. After app opens, Select videos. iOS allows multiple selection
+2. Processing takes a while, so wait
+3. Click on a thumbnail to see a video
+  a. trim beginning and end by dragging the side bars
+  b. when you're happy with the endpoints click "trim"
+  c. click "Done" to go back to the thumbnails
+4. When you're happy with your edits, drag and drop thumbnails into the order you want them stitched together
+5. Click the big red button
+6. Wait
+7. Keep waiting
+8. Your newly edited video should show up in the player as well as the CameraRoll
 
 ## Libraries used:
   * For video trimming, and thumbnails
