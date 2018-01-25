@@ -31,9 +31,11 @@
 1. After app opens, select videos. _iOS allows multiple selection_
 2. Processing takes a while, so wait
 3. Click on a thumbnail to see a video
+
   a. trim beginning and end by dragging the side bars
   b. when you're happy with the endpoints click "trim"
   c. click "Done" to go back to the thumbnails
+  
 4. When you're happy with your edits, drag and drop thumbnails into the order you want them stitched together
 5. Click the big red button
 6. Wait
