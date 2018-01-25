@@ -33,7 +33,15 @@ export default class Thumbnail extends Component {
 
   render() {
     return (
-      <TouchableOpacity style={styles.container} onPress={this.showMyVideo}>
+      <TouchableOpacity
+        style={[
+          styles.container,
+          {
+            flex: 1
+          }
+        ]}
+        onPress={this.showMyVideo}
+      >
         <Image
           style={{ width: 72, height: 72 }}
           source={{ uri: `data:image/gif;base64,${this.state.thumbnail}` }}

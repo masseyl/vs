@@ -4,7 +4,8 @@ import {
   Text,
   View,
   TouchableOpacity,
-  CameraRoll
+  CameraRoll,
+  Dimensions
 } from "react-native";
 import { connect } from "react-redux";
 // Add Actions - replace 'Your' with whatever your reducer is called :)
@@ -14,7 +15,7 @@ import Thumbnail from "../Components/Thumbnail";
 import ImagePicker from "react-native-image-crop-picker";
 import RNVideoEditor from "react-native-video-editor";
 import Immutable from "seamless-immutable";
-
+import SortableGrid from "react-native-sortable-grid";
 // Styles
 import styles from "./Styles/EditorsScreenStyle";
 
@@ -53,8 +54,8 @@ class EditorsScreen extends Component {
     const attachments = [];
     ImagePicker.openPicker({
       mediaType: "video",
-      multiple: true
-      // includeBase64: true
+      multiple: true,
+      maxFiles: 12
     })
       .then(videos => {
         this.props.addVideos(videos);
@@ -72,23 +73,8 @@ class EditorsScreen extends Component {
     });
   };
 
-  showEditor = () => {
-    if (this.state.videoPath) {
-      return (
-        <View>
-          <Editor
-            updateVideo={this.updateVideo}
-            source={this.state.videoPath}
-            done={() => {
-              this.setState({
-                videoPath: ""
-              });
-            }}
-          />
-        </View>
-      );
-    }
-    return null;
+  dragRelease = itemOrder => {
+    this.props.dragVideos(itemOrder);
   };
 
   updateVideo = (newSource, oldSource) => {
@@ -99,6 +85,25 @@ class EditorsScreen extends Component {
     this.setState({
       videoPath: newSource
     });
+  };
+
+  showEditor = () => {
+    if (this.state.videoPath) {
+      return (
+        <ScrollView containerStyle={{ flex: 1, height: 800 }}>
+          <Editor
+            updateVideo={this.updateVideo}
+            source={this.state.videoPath}
+            done={() => {
+              this.setState({
+                videoPath: ""
+              });
+            }}
+          />
+        </ScrollView>
+      );
+    }
+    return null;
   };
 
   render() {
@@ -123,17 +128,24 @@ class EditorsScreen extends Component {
         >
           <Text>Merge</Text>
         </TouchableOpacity>
-        <View
-          style={{
-            flex: 1,
-            flexWrap: "wrap",
-            flexDirection: "row",
-            justifyContent: "space-between"
-          }}
+        <SortableGrid
+          onDragRelease={this.dragRelease}
+          bottomPadding
+          style={{ flex: 1, width: Dimensions.get("window").width }}
         >
           {videos.map((video, index) => {
             return (
-              <View key={index} style={{ padding: 5 }}>
+              <View
+                key={video.path}
+                style={{
+                  borderWidth: 5,
+                  padding: 4,
+                  backgroundColor: "grey",
+                  borderStyle: "dashed",
+                  width: 90,
+                  height: 90
+                }}
+              >
                 <Thumbnail
                   source={video.path}
                   showVideo={this.clickThumbnail}
@@ -141,7 +153,8 @@ class EditorsScreen extends Component {
               </View>
             );
           })}
-        </View>
+        </SortableGrid>
+
         {this.showEditor()}
       </View>
     );
@@ -158,6 +171,9 @@ const mapDispatchToProps = dispatch => {
   return {
     addVideos: videos => {
       dispatch(EditorsActions.editorsAddVideos(videos));
+    },
+    dragVideos: videos => {
+      dispatch(EditorsActions.editorsDragVideos(videos));
     },
     updateVideo: sources => {
       dispatch(EditorsActions.editorsUpdateVideo(sources));
