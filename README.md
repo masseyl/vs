@@ -18,9 +18,13 @@
 2. Run Build for either OS
   * for iOS
     * run `react-native run-ios`
-  * for Android
-    * Run Genymotion
-    * run `react-native run-android`
+  * for Android - YMMV
+    * if running on device use Android SDK 26 
+      * make sure ANDROID_HOME path is correct in environment, or add a local.properties file to the android folder and set the 'sdk.dir' value. For example: sdk.dir = /Users/lancemassey/Library/Android/sdk
+      * make sure you're using JRE 1.8 
+    * if not on device
+      * Run Genymotion
+      * run `react-native run-android`
 
 ## Libraries used:
   * For video trimming, and thumbnails
