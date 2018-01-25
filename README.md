@@ -22,3 +22,5 @@
     * Run Genymotion
     * run `react-native run-android`
 
+## Libraries used:
+* React Native Video Processing [https://github.com/shahen94/react-native-video-processing]
