@@ -11,14 +11,18 @@ export default class Thumbnail extends Component {
       thumbnail: ""
     };
   }
+
   componentDidMount() {
+    //give the OS a few milliseconds to make the thumbnails
     setTimeout(() => {
       this.getPreviewImageForSecond(this.props.source, 5);
     }, 100);
   }
+
+  // native module for processing thumbnail images
   getPreviewImageForSecond = (path, second) => {
-    const maximumSize = { width: 72, height: 72 }; // default is { width: 1080, height: 1080 } iOS only
-    ProcessingManager.getPreviewForSecond(path, second, maximumSize, "base64") // maximumSize is iOS only
+    const maximumSize = { width: 56, height: 56 };
+    ProcessingManager.getPreviewForSecond(path, second, maximumSize, "base64")
       .then(base64String => {
         this.setState({
           thumbnail: base64String

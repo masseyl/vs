@@ -8,6 +8,7 @@ import Thumbnail from "../Components/Thumbnail";
 import styles from "./Styles/ThumbnailGridStyle";
 
 export default class ThumbnailGrid extends Component {
+  // when finished dragging a thumbnail, re-order the files in redux
   dragRelease = itemOrder => {
     this.props.dragRelease(itemOrder);
   };
@@ -15,15 +16,17 @@ export default class ThumbnailGrid extends Component {
   render() {
     if (!this.props.videos) return null;
     return (
-      <SortableGrid onDragRelease={this.dragRelease} style={styles.container}>
-        {this.props.videos.map((video, index) => {
-          return (
-            <View key={video.path} style={styles.thumbnail}>
-              <Thumbnail source={video.path} showVideo={this.props.click} />
-            </View>
-          );
-        })}
-      </SortableGrid>
+      <View style={styles.container}>
+        <SortableGrid onDragRelease={this.dragRelease} style={styles.grid}>
+          {this.props.videos.map((video, index) => {
+            return (
+              <View key={video.path} style={styles.thumbnail}>
+                <Thumbnail source={video.path} showVideo={this.props.click} />
+              </View>
+            );
+          })}
+        </SortableGrid>
+      </View>
     );
   }
 }

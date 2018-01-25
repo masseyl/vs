@@ -1,8 +1,8 @@
 import React, { Component } from "react";
-// import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import {
+  ScrollView,
   View,
-  Modal,
   Text,
   TouchableOpacity,
   Image,
@@ -12,6 +12,7 @@ import {
 import { VideoPlayer, Trimmer } from "react-native-video-processing";
 
 import styles from "./Styles/EditorStyle";
+import EditorControls from "./EditorControls";
 
 export default class Editor extends Component {
   constructor(props) {
@@ -34,8 +35,8 @@ export default class Editor extends Component {
     });
   }
 
-  done = () => {
-    this.props.done();
+  doneEditing = () => {
+    this.props.doneEditing();
   };
 
   play = () => {
@@ -57,7 +58,9 @@ export default class Editor extends Component {
     };
     this.videoPlayerRef
       .trim(options)
-      .then(newSource => this.props.updateVideo(newSource, this.props.source))
+      .then(newSource =>
+        this.props.updateVideoSource(newSource, this.props.source)
+      )
       .catch(console.warn);
   };
 
@@ -73,51 +76,48 @@ export default class Editor extends Component {
     let source = this.props.source;
     return (
       <View>
-        <View>
-          <VideoPlayer
-            ref={ref => (this.videoPlayerRef = ref)}
-            startTime={this.state.startTime}
-            currentTime={this.state.currentTime}
-            endTime={this.state.endTime}
-            play={this.state.play}
-            source={source}
-            playerWidth={
-              Platform.OS === "ios" ? Dimensions.get("window").width : null
-            } // iOS only
-            playerHeight={Platform.OS === "ios" ? 250 : null} // iOS only
-            resizeMode={VideoPlayer.Constants.resizeMode.NONE}
-            onPress={this.play}
-          />
-        </View>
-        <View style={{ paddingTop: 250 }}>
-          <Trimmer
-            source={source}
-            height={50}
-            width={Dimensions.get("window").width}
-            onChange={this.moveTrimmer}
-          />
-        </View>
-        <View>
-          <TouchableOpacity
-            style={{ backgroundColor: "blue", margin: 10 }}
-            onPress={this.play}
-          >
-            <Text>Play</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ backgroundColor: "red", margin: 10 }}
-            onPress={this.trimVideo}
-          >
-            <Text>Trim</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={{ backgroundColor: "green", margin: 10 }}
-            onPress={this.done}
-          >
-            <Text>Done</Text>
-          </TouchableOpacity>
-        </View>
+        <ScrollView containerStyle={{ flex: 1, height: 800 }}>
+          <View>
+            <VideoPlayer
+              style={styles.player}
+              ref={ref => (this.videoPlayerRef = ref)}
+              startTime={this.state.startTime}
+              currentTime={this.state.currentTime}
+              endTime={this.state.endTime}
+              play={this.state.play}
+              source={source}
+              playerWidth={
+                Platform.OS === "ios" ? Dimensions.get("window").width : null
+              } // iOS only
+              playerHeight={Platform.OS === "ios" ? 250 : null} // iOS only
+              resizeMode={VideoPlayer.Constants.resizeMode.NONE}
+              onPress={this.play}
+            />
+          </View>
+          <View style={styles.trimmer}>
+            <Trimmer
+              source={source}
+              height={30}
+              width={Dimensions.get("window").width}
+              onChange={this.moveTrimmer}
+            />
+          </View>
+          <View>
+            <EditorControls
+              doneEditing={this.doneEditing}
+              trimVideo={this.trimVideo}
+              play={this.play}
+              playing={this.state.play}
+            />
+          </View>
+        </ScrollView>
       </View>
     );
   }
 }
+
+Editor.propTypes = {
+  doneEditing: PropTypes.func,
+  source: PropTypes.string,
+  updateVideoSource: PropTypes.func
+};

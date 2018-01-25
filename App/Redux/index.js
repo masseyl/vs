@@ -5,15 +5,13 @@ import rootSaga from "../Sagas/";
 /* ------------- Assemble The Reducers ------------- */
 export const reducers = combineReducers({
   nav: require("./NavigationRedux").reducer,
-  editors: require("./EditorsRedux").reducer,
-  github: require("./GithubRedux").reducer,
-  search: require("./SearchRedux").reducer,
+  editors: require("./EditorsRedux").reducer
 });
 
 export default () => {
   let { store, sagasManager, sagaMiddleware } = configureStore(
     reducers,
-    rootSaga,
+    rootSaga
   );
 
   if (module.hot) {

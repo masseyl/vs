@@ -8,9 +8,9 @@ import {
   Dimensions
 } from "react-native";
 import { connect } from "react-redux";
+// native modules
 import ImagePicker from "react-native-image-crop-picker";
 import RNVideoEditor from "react-native-video-editor";
-import Immutable from "seamless-immutable";
 // custom components
 import Editor from "../Components/Editor";
 import Header from "../Components/Header";
@@ -86,8 +86,8 @@ class EditorsScreen extends Component {
 
   // the way trim works is it creates a new file each time, so we need to
   // swap out the references here
-  updateVideo = (newSource, oldSource) => {
-    this.props.updateVideo({
+  updateVideoSource = (newSource, oldSource) => {
+    this.props.updateVideoSource({
       newSource: newSource,
       oldSource: oldSource
     });
@@ -96,43 +96,39 @@ class EditorsScreen extends Component {
     });
   };
 
-  showEditor = () => {
-    if (this.state.videoPath) {
-      return (
-        <View>
-          <ScrollView containerStyle={{ flex: 1, height: 800 }}>
-            <Editor
-              updateVideo={this.updateVideo}
-              source={this.state.videoPath}
-              done={() => {
-                this.setState({
-                  videoPath: ""
-                });
-              }}
-            />
-          </ScrollView>
-        </View>
-      );
-    }
-    return null;
+  doneEditing = () => {
+    this.setState({
+      videoPath: ""
+    });
   };
 
   render() {
     const videos = this.props.videos.videos;
+    const editing = !!this.state.videoPath;
     return (
       <View style={styles.container}>
-        <Header
-          openPicker={this.openPicker}
-          mergeEdits={this.mergeEdits}
-          videos={videos}
-        />
-        <ScrollView>
-          <ThumbnailGrid
-            dragRelease={this.dragRelease}
+        {!editing && (
+          <Header
+            openPicker={this.openPicker}
+            mergeEdits={this.mergeEdits}
             videos={videos}
-            click={this.clickThumbnail}
           />
-          {this.showEditor()}
+        )}
+        <ScrollView>
+          {!editing && (
+            <ThumbnailGrid
+              dragRelease={this.dragRelease}
+              videos={videos}
+              click={this.clickThumbnail}
+            />
+          )}
+          {editing && (
+            <Editor
+              updateVideoSource={this.updateVideoSource}
+              source={this.state.videoPath}
+              doneEditing={this.doneEditing}
+            />
+          )}
         </ScrollView>
       </View>
     );
@@ -153,8 +149,8 @@ const mapDispatchToProps = dispatch => {
     dragVideos: videos => {
       dispatch(EditorsActions.editorsDragVideos(videos));
     },
-    updateVideo: sources => {
-      dispatch(EditorsActions.editorsUpdateVideo(sources));
+    updateVideoSource: sources => {
+      dispatch(EditorsActions.editorsUpdateVideoSource(sources));
     }
   };
 };

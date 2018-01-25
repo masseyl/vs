@@ -6,7 +6,7 @@ import Immutable from "seamless-immutable";
 const { Types, Creators } = createActions({
   editorsAddVideos: ["videos"],
   editorsDragVideos: ["videos"],
-  editorsUpdateVideo: ["video"],
+  editorsUpdateVideoSource: ["video"],
   editorsRequest: ["data"],
   editorsSuccess: ["payload"],
   editorsFailure: null
@@ -64,7 +64,7 @@ export const dragVideos = (state, action) => {
   return state.merge({ videos: newVideos });
 };
 
-export const updateVideo = (state, action) => {
+export const updateVideoSource = (state, action) => {
   const { newSource, oldSource } = action.video;
   let newVideos = Immutable.asMutable(state.videos);
   for (let vid in newVideos) {
@@ -82,7 +82,7 @@ export const updateVideo = (state, action) => {
 export const reducer = createReducer(INITIAL_STATE, {
   [Types.EDITORS_ADD_VIDEOS]: addVideos,
   [Types.EDITORS_DRAG_VIDEOS]: dragVideos,
-  [Types.EDITORS_UPDATE_VIDEO]: updateVideo,
+  [Types.EDITORS_UPDATE_VIDEO_SOURCE]: updateVideoSource,
   [Types.EDITORS_REQUEST]: request,
   [Types.EDITORS_SUCCESS]: success,
   [Types.EDITORS_FAILURE]: failure
