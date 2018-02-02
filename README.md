@@ -6,7 +6,7 @@
   * [Main Container](https://github.com/masseyl/vs/blob/master/App/Containers/EditorsScreen.js)
   * [Redux](https://github.com/masseyl/vs/blob/master/App/Redux/EditorsRedux.js)
 
-### Screenshots
+### Screenshots (Big files - you'll need to download them)
   * [Selecting videos](https://github.com/masseyl/vs/blob/master/screenshots/1.%20Selecting%20videos.mp4)
   * [Trimming videos](https://github.com/masseyl/vs/blob/master/screenshots/2.%20Trimming%20a%20video.mp4)
   * [Drag-n-Drop](https://github.com/masseyl/vs/blob/master/screenshots/3.%20Drag-n-Drop%20ordering.mp4)
