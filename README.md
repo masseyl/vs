@@ -7,7 +7,8 @@
   * [Redux](https://github.com/masseyl/vs/blob/master/App/Redux/EditorsRedux.js)
 
 ### Screenshots
-  * [Selecting videos](https://github.com/masseyl/vs/blob/master/screenshots/1.%20Selecting%20videos.mp4)
+![alt text](screenshots/filename.png "Description goes here")
+ ![Selecting videos](screenshots/1.%20Selecting%20videos.mp4 "electing videos")
   * [Trimming videos](https://github.com/masseyl/vs/blob/master/screenshots/2.%20Trimming%20a%20video.mp4)
   * [Drag-n-Drop](https://github.com/masseyl/vs/blob/master/screenshots/3.%20Drag-n-Drop%20ordering.mp4)
   * [Stitching together the result](https://github.com/masseyl/vs/blob/master/screenshots/4.%20Stitching%20together%20a%20new%20video.mp4)
